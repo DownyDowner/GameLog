@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { GameCompletedList } from "../models/GameCompletedList";
 import XpWindow from "../components/XpWindow";
 import XpLoadingScreen from "../components/XpLoadingScreen";
+import { Link } from "react-router-dom";
 
 function GamesCompletedList() {
   const [games, setGames] = useState<GameCompletedList[]>([]);
@@ -33,6 +34,8 @@ function GamesCompletedList() {
     return `${day}/${month}/${year}`;
   };
 
+  const getGameDetailsPath = (id: string) => `/games/${id}`;
+
   const content = loading ? (
     <XpLoadingScreen />
   ) : error ? (
@@ -43,17 +46,12 @@ function GamesCompletedList() {
     <ul className="d-flex flex-column justify-content-center align-items-center gap-2 px-3 mt-2">
       {games.length > 0 ? (
         games.map((game) => (
-          <li
-            key={game.id}
-            className="xp-button w-50"
-            onClick={() =>
-              console.log(
-                `You clicked : ${game.title} - ${game.platform} - ${game.completedOn}`
-              )
-            }
+          <Link
+            to={getGameDetailsPath(game.id)}
+            className="xp-button w-50 d-block text-decoration-none text-center"
           >
             {game.title} - {game.platform} - {formatDate(game.completedOn)}
-          </li>
+          </Link>
         ))
       ) : (
         <li className="list-unstyled">Pas de Jeux référencés</li>
