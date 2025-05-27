@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { GameFull } from "../models/GameFull";
 import { getGame } from "../apis/GameApi";
 import { ROUTES } from "../router/Routes";
+import XpWindow from "../components/XpWindow";
+import XpLoadingScreen from "../components/XpLoadingScreen";
 
 function GameDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
   if (!id) return <Navigate to={ROUTES.HOME} replace />;
 
   const [game, setGames] = useState<GameFull>();
@@ -28,10 +31,27 @@ function GameDetails() {
     fetchData();
   }, []);
 
-  if (loading) return <div>loading...</div>;
-  if (error) return <div>error</div>;
+  const handleClose = () => {
+    navigate(ROUTES.HOME);
+  };
 
-  return <div>Game ID: {id}</div>;
+  if (loading) {
+    return (
+      <XpWindow title="Chargement" onClose={handleClose}>
+        <XpLoadingScreen />
+      </XpWindow>
+    );
+  }
+
+  if (error || !game) {
+    return <Navigate to={ROUTES.HOME} replace />;
+  }
+
+  return (
+    <XpWindow title={`${game.title} - ${game.platform}`} onClose={handleClose}>
+      <div>Hello World</div>
+    </XpWindow>
+  );
 }
 
 export default GameDetails;
