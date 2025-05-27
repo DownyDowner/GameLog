@@ -36,30 +36,43 @@ function GamesCompletedList() {
 
   const getGameDetailsPath = (id: string) => `/games/${id}`;
 
-  const content = loading ? (
-    <XpLoadingScreen />
-  ) : error ? (
-    <div className="alert alert-danger text-center m-4" role="alert">
-      Une erreur est survenue lors du chargement des jeux.
-    </div>
-  ) : (
-    <ul className="d-flex flex-column justify-content-center align-items-center gap-2 px-3 mt-2">
-      {games.length > 0 ? (
-        games.map((game) => (
-          <Link
-            to={getGameDetailsPath(game.id)}
-            className="xp-button w-50 d-block text-decoration-none text-center"
-          >
-            {game.title} - {game.platform} - {formatDate(game.completedOn)}
-          </Link>
-        ))
-      ) : (
-        <li className="list-unstyled">Pas de Jeux référencés</li>
-      )}
-    </ul>
-  );
+  if (loading) {
+    return (
+      <XpWindow title="Mes Jeux Complétés">
+        <XpLoadingScreen />
+      </XpWindow>
+    );
+  }
 
-  return <XpWindow title="Mes Jeux Complétés">{content}</XpWindow>;
+  if (error) {
+    return (
+      <XpWindow title="Mes Jeux Complétés">
+        <div className="alert alert-danger text-center m-4" role="alert">
+          Une erreur est survenue lors du chargement des jeux.
+        </div>
+      </XpWindow>
+    );
+  }
+
+  return (
+    <XpWindow title="Mes Jeux Complétés">
+      <ul className="d-flex flex-column justify-content-center align-items-center gap-2 px-3 mt-2">
+        {games.length > 0 ? (
+          games.map((game) => (
+            <Link
+              key={game.id}
+              to={getGameDetailsPath(game.id)}
+              className="xp-button w-50 d-block text-decoration-none text-center"
+            >
+              {game.title} - {game.platform} - {formatDate(game.completedOn)}
+            </Link>
+          ))
+        ) : (
+          <li className="list-unstyled">Pas de Jeux référencés</li>
+        )}
+      </ul>
+    </XpWindow>
+  );
 }
 
 export default GamesCompletedList;
