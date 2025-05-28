@@ -5,6 +5,8 @@ import { getGame } from "../apis/GameApi";
 import { ROUTES } from "../router/Routes";
 import XpWindow from "../components/XpWindow";
 import XpLoadingScreen from "../components/XpLoadingScreen";
+import GameDetailsImage from "./GameDetailsImage";
+import GameDetailsReview from "./GameDetailsReview";
 
 function GameDetails() {
   const { id } = useParams();
@@ -24,7 +26,6 @@ function GameDetails() {
         setError("Une erreur est survenue.");
       } finally {
         setLoading(false);
-        console.log("Game", game);
       }
     };
 
@@ -49,7 +50,10 @@ function GameDetails() {
 
   return (
     <XpWindow title={`${game.title} - ${game.platform}`} onClose={handleClose}>
-      <div>Hello World</div>
+      <div className="row">
+        <GameDetailsImage image="test" title={game.title} />
+        <GameDetailsReview rating={game.rating} review={game.review} />
+      </div>
     </XpWindow>
   );
 }
