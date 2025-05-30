@@ -6,7 +6,7 @@ using GameLogAPI.src.Repositories;
 namespace GameLogAPI.src.Services {
     public class GameService(IGameRepository repository) {
         internal async Task<Guid> AddGame(AddGameRequest req, CancellationToken ct) {
-            var game = new Game { Title= req.Title, IdPlatform = req.IdPlatform, ReleaseDate = req.ReleaseDate };
+            var game = new Game { Title= req.Title, IdPlatform = req.IdPlatform, ReleaseDate = req.ReleaseDate, Shop = req.Shop, ShopLink = req.ShopLink };
             return await repository.AddAsync(game, ct);
         }
 
@@ -38,6 +38,8 @@ namespace GameLogAPI.src.Services {
             game.Review = req.Review;
             game.StartedOn = req.StartedOn;
             game.CompletedOn = req.CompletedOn;
+            game.Shop = req.Shop;
+            game.ShopLink = req.ShopLink;
             await repository.UpdateAsync(game, ct);
         }
 

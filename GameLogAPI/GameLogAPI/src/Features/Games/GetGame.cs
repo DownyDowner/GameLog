@@ -19,11 +19,14 @@ namespace GameLogAPI.src.Features.Games {
                 Rating: game.Rating,
                 Review: game.Review,
                 StartedOn: game.StartedOn,
-                CompletedOn: game.CompletedOn
+                CompletedOn: game.CompletedOn,
+                Shop: game.Shop,
+                ShopLink: game.ShopLink
             ), ct);
         }
     }
 
     public record GetGameRequest(Guid Id);
-    public record GetGameResponse(Guid Id, string Title, string Platform, DateOnly ReleaseDate, string Status, int? Rating, string? Review, DateTime? StartedOn, DateTime? CompletedOn);
+    public record GetGameResponse(Guid Id, string Title, string Platform, DateOnly ReleaseDate, string Status, int? Rating, 
+        string? Review, DateTime? StartedOn, DateTime? CompletedOn, string? Shop, string? ShopLink);
 }

@@ -15,7 +15,7 @@ namespace GameLogAPI.src.Features.Games {
         }
     }
 
-    public record AddGameRequest(string Title, Guid IdPlatform, DateOnly ReleaseDate);
+    public record AddGameRequest(string Title, Guid IdPlatform, DateOnly ReleaseDate, string? Shop, string? ShopLink);
 
     public class AddGameRequestValidator : Validator<AddGameRequest> {
         public AddGameRequestValidator() {

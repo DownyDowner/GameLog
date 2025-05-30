@@ -17,7 +17,7 @@ namespace GameLogAPI.src.Features.Games {
     }
 
     public record UpdateGameRequest(Guid Id, string Title, Guid IdPlatform, DateOnly ReleaseDate, GameStatus Status, 
-        int? Rating, string? Review, DateTime? StartedOn, DateTime? CompletedOn);
+        int? Rating, string? Review, DateTime? StartedOn, DateTime? CompletedOn, string? Shop, string? ShopLink);
 
     public class UpdateGameRequestValidator : Validator<UpdateGameRequest> {
         public UpdateGameRequestValidator() {
