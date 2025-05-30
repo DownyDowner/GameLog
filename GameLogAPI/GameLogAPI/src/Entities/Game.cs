@@ -24,6 +24,9 @@ namespace GameLogAPI.src.Entities {
         public string? Review { get; set; }
         public DateTime? StartedOn { get; set; }
         public DateTime? CompletedOn { get; set; }
+        public string? Shop { get; set; }
+        [Url]
+        public string? ShopLink { get; set; }
 
         public Platform? Platform { get; set; }
     }
