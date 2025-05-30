@@ -3,8 +3,8 @@ import { Icon } from "@mdi/react";
 import { mdiStar, mdiStarOutline } from "@mdi/js";
 
 interface GameDetailsReviewProps {
-  rating: number | null;
-  review: string | null;
+  rating: number;
+  review: string;
 }
 
 function GameDetailsReview({ rating, review }: GameDetailsReviewProps) {
@@ -16,7 +16,7 @@ function GameDetailsReview({ rating, review }: GameDetailsReviewProps) {
           {[...Array(MAX_RATING)].map((_, i) => (
             <Icon
               key={i}
-              path={i < (rating ?? MAX_RATING) ? mdiStar : mdiStarOutline}
+              path={i < rating ? mdiStar : mdiStarOutline}
               size={1}
             />
           ))}
@@ -24,7 +24,7 @@ function GameDetailsReview({ rating, review }: GameDetailsReviewProps) {
 
         <h5 className="fw-bold">Critique</h5>
         <div>
-          <p>{review || "Aucune critique disponible."}</p>
+          <p>{review}</p>
         </div>
       </div>
     </div>

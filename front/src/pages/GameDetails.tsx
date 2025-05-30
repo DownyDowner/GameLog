@@ -52,7 +52,7 @@ function GameDetails() {
     <XpWindow title={`${game.title} - ${game.platform}`} onClose={handleClose}>
       <div className="row">
         <GameDetailsImage image="test" title={game.title} />
-        <GameDetailsReview rating={game.rating} review={game.review} />
+        <GameDetailsReview rating={game.rating!} review={game.review!} />
       </div>
     </XpWindow>
   );
