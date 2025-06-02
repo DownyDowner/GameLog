@@ -8,6 +8,8 @@ export class GameFullDTO {
   review: null | string = null;
   startedOn: null | string = null;
   completedOn: null | string = null;
+  shop: null | string = null;
+  shopLink: null | string = null;
 }
 
 export class GameFull extends GameFullDTO {
