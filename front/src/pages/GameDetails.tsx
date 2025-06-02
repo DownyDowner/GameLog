@@ -7,6 +7,7 @@ import XpWindow from "../components/XpWindow";
 import XpLoadingScreen from "../components/XpLoadingScreen";
 import GameDetailsImage from "./GameDetailsImage";
 import GameDetailsReview from "./GameDetailsReview";
+import GameDetailsShop from "./GameDetailsShop";
 
 function GameDetails() {
   const { id } = useParams();
@@ -53,6 +54,7 @@ function GameDetails() {
       <div className="row">
         <GameDetailsImage image="test" title={game.title} />
         <GameDetailsReview rating={game.rating!} review={game.review!} />
+        <GameDetailsShop shop={game.shop!} shopLink={game.shopLink!} />
       </div>
     </XpWindow>
   );
