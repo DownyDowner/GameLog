@@ -4,10 +4,15 @@ using GameLogAPI.Middlewares;
 using GameLogAPI.src.Data;
 using GameLogAPI.src.Repositories;
 using GameLogAPI.src.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddAuthorization();
+builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+    .AddEntityFrameworkStores<GameDbContext>();
 
 builder.Services.AddDbContext<GameDbContext>(options =>
     options.UseSqlite(connectionString));
@@ -37,6 +42,8 @@ builder.Services.AddScoped<PlatformService>();
 var app = builder.Build();
 app.UseFastEndpoints()
    .UseSwaggerGen();
+
+app.MapIdentityApi<IdentityUser>();
 
 app.UseCors(MyAllowSpecificOrigins);
 

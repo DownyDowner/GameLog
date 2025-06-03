@@ -1,9 +1,9 @@
 ﻿using GameLogAPI.src.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace GameLogAPI.src.Data {
-    public class GameDbContext : DbContext {
+    public class GameDbContext : IdentityDbContext {
         public GameDbContext(DbContextOptions<GameDbContext> options)
             : base(options) { }
 
