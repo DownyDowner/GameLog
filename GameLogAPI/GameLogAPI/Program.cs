@@ -10,9 +10,11 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<GameDbContext>()
+    .AddDefaultTokenProviders();
+
 builder.Services.AddAuthorization();
-builder.Services.AddIdentityApiEndpoints<IdentityUser>()
-    .AddEntityFrameworkStores<GameDbContext>();
 
 builder.Services.AddDbContext<GameDbContext>(options =>
     options.UseSqlite(connectionString));
@@ -40,10 +42,19 @@ builder.Services.AddScoped<IPlatformRepository, PlatformRepository>();
 builder.Services.AddScoped<PlatformService>();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope()) {
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    var roleName = "Admin";
+
+    if (!await roleManager.RoleExistsAsync(roleName)) {
+        await roleManager.CreateAsync(new IdentityRole(roleName));
+    }
+}
+
 app.UseFastEndpoints()
    .UseSwaggerGen();
-
-app.MapIdentityApi<IdentityUser>();
 
 app.UseCors(MyAllowSpecificOrigins);
 
