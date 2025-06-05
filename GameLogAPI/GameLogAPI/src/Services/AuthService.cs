@@ -7,15 +7,15 @@ namespace GameLogAPI.src.Services {
         public async Task<string> Login(string email, string password, CancellationToken ct) {
             var user = await userManager.FindByEmailAsync(email);
             if (user == null)
-                throw new ServiceException("User not found", StatusCodes.Status404NotFound);
+                throw new ServiceException("User not found.", StatusCodes.Status404NotFound);
 
             var result = await signInManager.CheckPasswordSignInAsync(user, password, false);
             if (!result.Succeeded)
-                throw new ServiceException("The supplied credentials are invalid!");
+                throw new ServiceException("The supplied credentials are invalid!", StatusCodes.Status401Unauthorized);
 
             var signingKey = Environment.GetEnvironmentVariable("JWT_SIGNING_KEY");
             if (string.IsNullOrEmpty(signingKey))
-                throw new ServiceException("JWT signing key is missing.");
+                throw new ServiceException("JWT signing key is missing.", StatusCodes.Status500InternalServerError);
 
             var roles = await userManager.GetRolesAsync(user);
 
