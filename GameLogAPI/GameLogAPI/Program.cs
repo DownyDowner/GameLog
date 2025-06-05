@@ -1,4 +1,6 @@
+using DotNetEnv;
 using FastEndpoints;
+using FastEndpoints.Security;
 using FastEndpoints.Swagger;
 using GameLogAPI.Middlewares;
 using GameLogAPI.src.Data;
@@ -7,22 +9,27 @@ using GameLogAPI.src.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
+Env.Load();
+
 var builder = WebApplication.CreateBuilder();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var signingKey = Environment.GetEnvironmentVariable("JWT_SIGNING_KEY");
+
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<GameDbContext>()
     .AddDefaultTokenProviders();
 
-builder.Services.AddAuthorization();
-
-builder.Services.AddDbContext<GameDbContext>(options =>
-    options.UseSqlite(connectionString));
-
 builder.Services
+   .AddAuthenticationJwtBearer(s => s.SigningKey = signingKey)
+   .AddAuthorization()
+   .AddFastEndpoints()
    .AddFastEndpoints()
    .SwaggerDocument();
 
+builder.Services.AddDbContext<GameDbContext>(options =>
+    options.UseSqlite(connectionString));
+   
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 builder.Services.AddCors(options => {
@@ -34,6 +41,8 @@ builder.Services.AddCors(options => {
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
+
+builder.Services.AddScoped<AuthService>();
 
 builder.Services.AddScoped<IGameRepository, GameRepository>();
 builder.Services.AddScoped<GameService>();
@@ -53,7 +62,9 @@ using (var scope = app.Services.CreateScope()) {
     }
 }
 
-app.UseFastEndpoints()
+app.UseAuthentication()
+   .UseAuthorization()
+   .UseFastEndpoints()
    .UseSwaggerGen();
 
 app.UseCors(MyAllowSpecificOrigins);
