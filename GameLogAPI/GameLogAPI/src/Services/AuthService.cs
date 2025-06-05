@@ -1,18 +1,35 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using FastEndpoints.Security;
+using GameLogAPI.src.Exceptions;
+using Microsoft.AspNetCore.Identity;
 
 namespace GameLogAPI.src.Services {
     public class AuthService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager) {
-        public async Task<(bool IsValid, IdentityUser? User)> ValidateAndGetUserAsync(string email, string password, CancellationToken ct) {
+        public async Task<string> Login(string email, string password, CancellationToken ct) {
             var user = await userManager.FindByEmailAsync(email);
             if (user == null)
-                return (false, null);
+                throw new ServiceException("User not found", StatusCodes.Status404NotFound);
 
             var result = await signInManager.CheckPasswordSignInAsync(user, password, false);
-            return (result.Succeeded, result.Succeeded ? user : null);
-        }
+            if (!result.Succeeded)
+                throw new ServiceException("The supplied credentials are invalid!");
 
-        public async Task<IEnumerable<string>> GetRolesAsync(IdentityUser user) {
-            return await userManager.GetRolesAsync(user);
+            var signingKey = Environment.GetEnvironmentVariable("JWT_SIGNING_KEY");
+            if (string.IsNullOrEmpty(signingKey))
+                throw new ServiceException("JWT signing key is missing.");
+
+            var roles = await userManager.GetRolesAsync(user);
+
+            return JwtBearer.CreateToken(o =>
+            {
+                o.SigningKey = signingKey;
+                o.ExpireAt = DateTime.UtcNow.AddDays(1);
+
+                o.User.Claims.Add(("sub", user.Id));
+                o.User.Claims.Add(("email", email));
+
+                foreach (var role in roles)
+                    o.User.Roles.Add(role);
+            });
         }
     }
 }
