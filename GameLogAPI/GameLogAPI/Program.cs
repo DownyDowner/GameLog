@@ -3,6 +3,7 @@ using FastEndpoints;
 using FastEndpoints.Security;
 using FastEndpoints.Swagger;
 using GameLogAPI.Middlewares;
+using GameLogAPI.src.Constants;
 using GameLogAPI.src.Data;
 using GameLogAPI.src.Repositories;
 using GameLogAPI.src.Services;
@@ -55,7 +56,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope()) {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-    var roleName = "Admin";
+    var roleName = RoleConstants.ADMIN;
 
     if (!await roleManager.RoleExistsAsync(roleName)) {
         await roleManager.CreateAsync(new IdentityRole(roleName));
