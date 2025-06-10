@@ -1,12 +1,13 @@
 ﻿using FastEndpoints;
 using FluentValidation;
+using GameLogAPI.src.Constants;
 using GameLogAPI.src.Services;
 
 namespace GameLogAPI.src.Features.Games {
     public class AddGameEndpoint(GameService service) : Endpoint<AddGameRequest> {
         public override void Configure() {
             Post("games");
-            AllowAnonymous();
+            Roles(RoleConstants.ADMIN);
         }
 
         public override async Task HandleAsync(AddGameRequest req, CancellationToken ct) {

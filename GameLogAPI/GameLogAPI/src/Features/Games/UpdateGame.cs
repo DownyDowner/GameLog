@@ -1,5 +1,6 @@
 ﻿using FastEndpoints;
 using FluentValidation;
+using GameLogAPI.src.Constants;
 using GameLogAPI.src.Entities;
 using GameLogAPI.src.Services;
 
@@ -7,7 +8,7 @@ namespace GameLogAPI.src.Features.Games {
     public class UpdatePlatformEndpoint(GameService service) : Endpoint<UpdateGameRequest> {
         public override void Configure() {
             Put("games/{id:guid}");
-            AllowAnonymous();
+            Roles(RoleConstants.ADMIN);
         }
 
         public override async Task HandleAsync(UpdateGameRequest req, CancellationToken ct) {

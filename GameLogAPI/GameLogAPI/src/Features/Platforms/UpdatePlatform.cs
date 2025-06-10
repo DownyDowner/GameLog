@@ -1,12 +1,13 @@
 ﻿using FastEndpoints;
 using FluentValidation;
+using GameLogAPI.src.Constants;
 using GameLogAPI.src.Services;
 
 namespace GameLogAPI.src.Features.Platforms {
     public class UpdatePlatformEndpoint(PlatformService service) : Endpoint<UpdatePlatformRequest> {
         public override void Configure() {
             Put("platforms/{id:guid}");
-            AllowAnonymous();
+            Roles(RoleConstants.ADMIN);
         }
 
         public override async Task HandleAsync(UpdatePlatformRequest req, CancellationToken ct) {
