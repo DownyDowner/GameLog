@@ -7,6 +7,7 @@ using GameLogAPI.src.Constants;
 using GameLogAPI.src.Data;
 using GameLogAPI.src.Repositories;
 using GameLogAPI.src.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,11 +26,25 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddDefaultTokenProviders();
 
 // Configure FastEndpoints with JWT
+builder.Services.AddAuthentication(options => {
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options => {
+    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(
+            System.Text.Encoding.UTF8.GetBytes(signingKey))
+    };
+});
+
 builder.Services
     .AddFastEndpoints()
-    .AddAuthenticationJwtBearer(s => s.SigningKey = signingKey)
     .AddAuthorization()
     .SwaggerDocument();
+
 
 // CORS policy
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";

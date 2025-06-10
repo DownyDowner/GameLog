@@ -1,5 +1,4 @@
 ﻿using FastEndpoints;
-using FastEndpoints.Security;
 using GameLogAPI.src.Services;
 
 namespace GameLogAPI.src.Features.Authentication {
