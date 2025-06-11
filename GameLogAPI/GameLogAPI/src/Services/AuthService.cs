@@ -1,4 +1,5 @@
 ﻿using FastEndpoints.Security;
+using GameLogAPI.src.Constants;
 using GameLogAPI.src.Exceptions;
 using Microsoft.AspNetCore.Identity;
 
@@ -39,6 +40,17 @@ namespace GameLogAPI.src.Services {
             if (!result.Succeeded) {
                 throw new ServiceException("User registration failed.", StatusCodes.Status500InternalServerError);
             }
+        }
+
+        internal async Task RegisterAdmin(string email, string password, CancellationToken ct) {
+            var user = new IdentityUser { UserName = email, Email = email };
+            var result = await userManager.CreateAsync(user, password);
+
+            if (!result.Succeeded) {
+                throw new ServiceException("User registration failed.", StatusCodes.Status500InternalServerError);
+            }
+
+            await userManager.AddToRoleAsync(user, RoleConstants.ADMIN);
         }
     }
 }
