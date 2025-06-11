@@ -47,7 +47,7 @@ namespace GameLogAPI.src.Services {
             var result = await userManager.CreateAsync(user, password);
 
             if (!result.Succeeded) {
-                throw new ServiceException("User registration failed.", StatusCodes.Status500InternalServerError);
+                throw new ServiceException("Admin registration failed.", StatusCodes.Status500InternalServerError);
             }
 
             await userManager.AddToRoleAsync(user, RoleConstants.ADMIN);
