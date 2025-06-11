@@ -31,5 +31,14 @@ namespace GameLogAPI.src.Services {
                     o.User.Roles.Add(role);
             });
         }
+
+        internal async Task RegisterUser(string email, string password, CancellationToken ct) {
+            var user = new IdentityUser { UserName = email, Email = email };
+            var result = await userManager.CreateAsync(user, password);
+
+            if (!result.Succeeded) {
+                throw new ServiceException("User registration failed.", StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }
