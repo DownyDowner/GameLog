@@ -1,4 +1,4 @@
-import { MAX_RATING } from "../models/Constants";
+import { MAX_RATING } from "../../models/Constants";
 import { Icon } from "@mdi/react";
 import { mdiStar, mdiStarOutline } from "@mdi/js";
 

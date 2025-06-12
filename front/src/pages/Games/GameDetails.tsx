@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { GameFull } from "../models/GameFull";
-import { getGame } from "../apis/GameApi";
-import { ROUTES } from "../router/Routes";
-import XpWindow from "../components/XpWindow";
-import XpLoadingScreen from "../components/XpLoadingScreen";
+import { GameFull } from "../../models/GameFull";
+import { getGame } from "../../apis/GameApi";
+import { ROUTES } from "../../router/Routes";
+import XpWindow from "../../components/XpWindow";
+import XpLoadingScreen from "../../components/XpLoadingScreen";
 import GameDetailsImage from "./GameDetailsImage";
 import GameDetailsReview from "./GameDetailsReview";
 import GameDetailsShop from "./GameDetailsShop";
