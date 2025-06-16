@@ -2,15 +2,20 @@ import XpWindow from "../../components/XpWindow";
 import { FormEvent, useState } from "react";
 import { mdiEmailOutline, mdiLockOutline } from "@mdi/js";
 import Icon from "@mdi/react";
+import { login } from "../../apis/AuthApi";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
+    try {
+      const result = await login(email, password);
+      console.log("Connexion réussie :", result);
+    } catch (error) {
+      alert("Erreur de connexion. Veuillez vérifier vos identifiants.");
+    }
   };
 
   return (
