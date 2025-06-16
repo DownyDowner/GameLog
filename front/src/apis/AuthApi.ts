@@ -7,7 +7,7 @@ const instance = axios.create({
   timeout: 1000,
 });
 
-export const login = async (email: string, password: string) => {
+export const loginUser = async (email: string, password: string) => {
   try {
     const response = await instance.post("/login", {
       email,

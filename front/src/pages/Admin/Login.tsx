@@ -2,17 +2,24 @@ import XpWindow from "../../components/XpWindow";
 import { FormEvent, useState } from "react";
 import { mdiEmailOutline, mdiLockOutline } from "@mdi/js";
 import Icon from "@mdi/react";
-import { login } from "../../apis/AuthApi";
+import { loginUser } from "../../apis/AuthApi";
+import { useAuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../router/Routes";
 
 function Login() {
+  const navigate = useNavigate();
+  const { login } = useAuthContext();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const result = await login(email, password);
-      console.log("Connexion réussie :", result);
+      const result = await loginUser(email, password);
+      login(result);
+      navigate(ROUTES.ADMIN);
     } catch (error) {
       alert("Erreur de connexion. Veuillez vérifier vos identifiants.");
     }

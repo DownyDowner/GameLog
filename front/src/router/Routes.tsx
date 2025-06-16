@@ -2,11 +2,14 @@ import { Navigate, RouteObject } from "react-router-dom";
 import Home from "../pages/Home";
 import GameDetails from "../pages/Games/GameDetails";
 import Login from "../pages/Admin/Login";
+import { AdminRoute } from "../components/AdminRoute";
+import AdminDashboard from "../pages/Admin/AdminDashboard";
 
 export const ROUTES = {
   HOME: "/",
   GAMEDETAILS: "/games/:id",
   LOGIN: "/login",
+  ADMIN: "/admin",
 };
 
 const routes: RouteObject[] = [
@@ -21,6 +24,14 @@ const routes: RouteObject[] = [
   {
     path: ROUTES.LOGIN,
     element: <Login />,
+  },
+  {
+    path: ROUTES.ADMIN,
+    element: (
+      <AdminRoute>
+        <AdminDashboard />
+      </AdminRoute>
+    ),
   },
   {
     path: "*",
