@@ -4,6 +4,7 @@ import GameDetails from "../pages/Games/GameDetails";
 import Login from "../pages/Admin/Login";
 import { AdminRoute } from "../components/AdminRoute";
 import AdminDashboard from "../pages/Admin/AdminDashboard";
+import AdminLayout from "../layouts/AdminLayout";
 
 export const ROUTES = {
   HOME: "/",
@@ -29,7 +30,9 @@ const routes: RouteObject[] = [
     path: ROUTES.ADMIN,
     element: (
       <AdminRoute>
-        <AdminDashboard />
+        <AdminLayout>
+          <AdminDashboard />
+        </AdminLayout>
       </AdminRoute>
     ),
   },
