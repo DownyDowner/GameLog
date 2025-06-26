@@ -7,7 +7,7 @@ export const AdminRoute = ({ children }: { children: JSX.Element }) => {
   const { token, isAdmin } = useAuthContext();
 
   if (!token || !isAdmin) {
-    return <Navigate to={ROUTES.HOME} replace />;
+    return <Navigate to={ROUTES.LOGIN} replace />;
   }
 
   return children;
