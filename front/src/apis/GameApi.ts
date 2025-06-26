@@ -4,6 +4,7 @@ import {
   GameCompletedListDTO,
 } from "../models/GameCompletedList";
 import { GameFull, GameFullDTO } from "../models/GameFull";
+import { GameList, GameListDTO } from "../models/GameList";
 
 const API_BASE_URL = "https://localhost:7273/games";
 
@@ -26,6 +27,16 @@ export const getGame = async (id: string) => {
   try {
     const response = await instance.get<GameFullDTO>(`/${id}`);
     return new GameFull(response.data);
+  } catch (error) {
+    console.error("Error fetching data: ", error);
+    throw error;
+  }
+};
+
+export const getGames = async () => {
+  try {
+    const response = await instance.get<GameListDTO[]>("/");
+    return response.data.map((e) => new GameList(e));
   } catch (error) {
     console.error("Error fetching data: ", error);
     throw error;

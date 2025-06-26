@@ -5,12 +5,14 @@ import Login from "../pages/Admin/Login";
 import { AdminRoute } from "../components/AdminRoute";
 import AdminDashboard from "../pages/Admin/AdminDashboard";
 import AdminLayout from "../layouts/AdminLayout";
+import Games from "../pages/Admin/Games/Games";
 
 export const ROUTES = {
   HOME: "/",
   GAMEDETAILS: "/games/:id",
   LOGIN: "/login",
   ADMIN: "/admin",
+  ADMIN_GAMES: "/admin/games",
 };
 
 const routes: RouteObject[] = [
@@ -32,6 +34,16 @@ const routes: RouteObject[] = [
       <AdminRoute>
         <AdminLayout>
           <AdminDashboard />
+        </AdminLayout>
+      </AdminRoute>
+    ),
+  },
+  {
+    path: ROUTES.ADMIN_GAMES,
+    element: (
+      <AdminRoute>
+        <AdminLayout>
+          <Games />
         </AdminLayout>
       </AdminRoute>
     ),

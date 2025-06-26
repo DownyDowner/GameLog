@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+import { ROUTES } from "../../router/Routes";
+
 function AdminDashboard() {
   return (
     <div className="container py-4">
@@ -12,9 +15,9 @@ function AdminDashboard() {
                 <h5 className="card-title">Gestion des Jeux</h5>
                 <p className="card-text">Gérez les jeux disponibles.</p>
               </div>
-              <a href="#" className="btn btn-primary mt-3">
+              <Link to={ROUTES.ADMIN_GAMES} className="btn btn-primary mt-3">
                 Voir les jeux
-              </a>
+              </Link>
             </div>
           </div>
         </div>
