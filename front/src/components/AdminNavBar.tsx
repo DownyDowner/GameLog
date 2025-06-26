@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ROUTES } from "../router/Routes";
 import Icon from "@mdi/react";
-import { mdiHome, mdiLogout } from "@mdi/js";
+import { mdiHome, mdiMicrosoftXboxController, mdiLogout } from "@mdi/js";
 import { useAuthContext } from "../context/AuthContext";
 
 function AdminNavBar() {
@@ -9,7 +9,18 @@ function AdminNavBar() {
   const navigate = useNavigate();
   const { logout } = useAuthContext();
 
-  const navItems = [{ path: ROUTES.HOME, icon: mdiHome, label: "Home" }];
+  const navItems = [
+    {
+      path: ROUTES.ADMIN,
+      icon: mdiHome,
+      label: "Home",
+    },
+    {
+      path: ROUTES.ADMIN_GAMES,
+      icon: mdiMicrosoftXboxController,
+      label: "Games",
+    },
+  ];
 
   const handleLogout = () => {
     logout();
