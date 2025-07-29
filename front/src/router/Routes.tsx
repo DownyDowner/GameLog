@@ -6,6 +6,7 @@ import { AdminRoute } from "../components/AdminRoute";
 import AdminDashboard from "../pages/Admin/AdminDashboard";
 import AdminLayout from "../layouts/AdminLayout";
 import Games from "../pages/Admin/Games/Games";
+import Platforms from "../pages/Admin/Platforms/Platforms";
 
 export const ROUTES = {
   HOME: "/",
@@ -13,6 +14,7 @@ export const ROUTES = {
   LOGIN: "/login",
   ADMIN: "/admin",
   ADMIN_GAMES: "/admin/games",
+  ADMIN_PLATFORMS: "/admin/platforms",
 };
 
 const routes: RouteObject[] = [
@@ -44,6 +46,16 @@ const routes: RouteObject[] = [
       <AdminRoute>
         <AdminLayout>
           <Games />
+        </AdminLayout>
+      </AdminRoute>
+    ),
+  },
+  {
+    path: ROUTES.ADMIN_PLATFORMS,
+    element: (
+      <AdminRoute>
+        <AdminLayout>
+          <Platforms />
         </AdminLayout>
       </AdminRoute>
     ),

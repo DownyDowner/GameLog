@@ -29,9 +29,12 @@ function AdminDashboard() {
                 <h5 className="card-title">Gestion des plateformes</h5>
                 <p className="card-text">Administrez les plateformes.</p>
               </div>
-              <a href="#" className="btn btn-primary mt-3">
+              <Link
+                to={ROUTES.ADMIN_PLATFORMS}
+                className="btn btn-primary mt-3"
+              >
                 Voir les plateformes
-              </a>
+              </Link>
             </div>
           </div>
         </div>
