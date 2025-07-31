@@ -1,6 +1,5 @@
 ﻿using FastEndpoints;
 using GameLogAPI.src.Services;
-
 namespace GameLogAPI.src.Features.Platforms {
     public class GetPlatformEndpoint(PlatformService service) : Endpoint<GetPlatformRequest, GetPlatformResponse> {
         public override void Configure() {
@@ -15,8 +14,13 @@ namespace GameLogAPI.src.Features.Platforms {
                 Name: platform.Name,
                 Games: platform.Games
                     .Select(x => new GetPlatformGameResponse(
-                        Id: x.Id,
-                        Title: x.Title))
+                            Id: x.Id,
+                            Title: x.Title,
+                            Platform: x.Platform!.Name,
+                            ReleaseDate: x.ReleaseDate,
+                            Status: x.Status.ToString()
+                        )
+                    )
                     .ToArray()
             ), ct);
         }
@@ -24,5 +28,5 @@ namespace GameLogAPI.src.Features.Platforms {
 
     public record GetPlatformRequest(Guid Id);
     public record GetPlatformResponse(Guid Id, string Name, GetPlatformGameResponse[] Games);
-    public record GetPlatformGameResponse(Guid Id, string Title);
+    public record GetPlatformGameResponse(Guid Id, string Title, string Platform, DateOnly ReleaseDate, string Status);
 }
